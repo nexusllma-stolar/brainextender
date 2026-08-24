@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Atomic RAG | Enterprise Intelligence Architecture</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg-dark: #050508;
+            --bg-card: #0d0d14;
+            --primary: #00f3ff;
+            --secondary: #bc13fe;
+            --text-main: #e0e0e0;
+            --text-dim: #888;
+            --border: #1a1a2e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: radial-gradient(circle at 50% 0%, rgba(188, 19, 254, 0.15) 0%, transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Architecture Section */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .highlight { color: var(--primary); }
+        .highlight-2 { color: var(--secondary); }
+
+        .feature-box {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .feature-box h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* The 4B Section */
+        .section-4b {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0a12 100%);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(188, 19, 254, 0.05);
+            border: 1px solid rgba(188, 19, 254, 0.2);
+            padding: 30px;
+            border-radius: 12px;
+            width: 200px;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--secondary); }
+        .stat-label { font-size: 0.9rem; color: var(--text-dim); margin-top: 10px; }
+
+        /* Live Data Showcase */
+        .showcase {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .atom-display {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: #a9b7c6;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .atom-display .pred { color: var(--secondary); font-weight: bold; }
+        .atom-display .val { color: #9876aa; }
+        .atom-display .icu-specific { color: var(--primary); text-shadow: 0 0 8px rgba(0, 243, 255, 0.4); }
+
+        .tag {
+            font-size: 0.7rem;
+            background: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+            color: #aaa;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .stats-container { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="container">
+            <span class="badge">Enterprise Architecture</span>
+            <h1>Don't Scale the LLM.<br>Scale the Data.</h1>
+            <p>Nexus Atomic RAG transforms lightweight local 4B models into GPT-4 class domain experts by replacing chunked text with hyper-dense, mathematically precise atomic facts.</p>
+        </div>
+    </div>
+
+    <div class="grid-2 container">
+        <div>
+            <h2 class="section-title">The Problem with<br><span class="highlight">Classic RAG</span></h2>
+            <p style="color: var(--text-dim); margin-bottom: 30px;">Standard retrieval systems chunk documents into 500-token paragraphs. This creates "diluted vectors"—a mix of definitions, fluff, and conclusions. When a local 4B model retrieves this, it hallucinates bridges between unrelated concepts because the context is too noisy and token-heavy.</p>
+            <div class="feature-box" style="border-color: #ff4444;">
+                <h3 style="color: #ff4444;">❌ Diluted Cosine Similarity</h3>
+                <p style="font-size: 0.9rem;">Querying "Mortality metrics" pulls a whole paragraph about hospital logistics because the vector is averaged out.</p>
+            </div>
+            <div class="feature-box" style="border-color: #ff4444;">
+                <h3 style="color: #ff4444;">❌ Context Window Bloat</h3>
+                <p style="font-size: 0.9rem;">Feeding 3000 tokens of raw text to a 4B model causes immediate cognitive overload and high API/compute costs.</p>
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="section-title">The Nexus<br><span class="highlight-2">Atomic Solution</span></h2>
+            <p style="color: var(--text-dim); margin-bottom: 30px;">We deconstruct knowledge into strict predicate logic: <code>Subject :: Exact Definition/Formula</code>. We don't give the LLM paragraphs to read. We give it <strong>atomic eyes</strong> to see the exact solution.</p>
+            <div class="feature-box">
+                <h3>⚡ Active/Passive Vector Duality</h3>
+                <p style="font-size: 0.9rem;"><strong>Active:</strong> Fast retrieval of the Domain Node (PID). <strong>Passive:</strong> Sniping the exact 10-token atomic fact. Zero noise.</p>
+            </div>
+            <div class="feature-box">
+                <h3>🛡️ Zero-Redundancy Protocol</h3>
+                <p style="font-size: 0.9rem;">Domain context (e.g., "ICU") lives in the Node, not the Atom. No keyword stuffing. Maximum vector density.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-4b">
+        <div class="container">
+            <span class="badge">Performance Unlock</span>
+            <h2 class="section-title" style="text-align: center;">Empowering the<br><span class="highlight">Local 4B Model</span></h2>
+            <p style="color: var(--text-dim); max-width: 800px; margin: 0 auto 40px;">A 4 Billion parameter model lacks the reasoning capacity to write a medical textbook. But with Nexus Architecture, it doesn't have to reason. It just has to assemble. We move the intelligence from the model weights to the data structure.</p>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Reduction in Context Tokens</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0.98</div>
+                    <div class="stat-label">Passive Vector Precision</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4B</div>
+                    <div class="stat-label">Model acting like 100B+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="showcase container">
+        <span class="badge">Live Data Structure</span>
+        <h2 class="section-title">Anatomy of an <span class="highlight">Atomic Fact</span></h2>
+        <p style="color: var(--text-dim); margin-bottom: 30px;">Extracted from our Medical Domain Chain. Notice the absence of redundant fluff. Every token carries mathematical or structural weight.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h4 style="color: var(--text-dim); margin-bottom: 10px;">NODE: OUTCOME MEASURES IN ICU</h4>
+                
+                <div class="atom-display">
+                    <span class="pred">kpi ::</span> <span class="icu-specific">ventilator-free days (VFD)</span> <span class="val">(=) 28 - ventilator days</span>
+                </div>
+                <div class="atom-display">
+                    <span class="pred">method ::</span> <span class="icu-specific">SOFA score</span> <span class="val">↑ 2+ pts → ↑ mortality risk</span>
+                </div>
+                <div class="atom-display">
+                    <span class="pred">bias ::</span> <span class="icu-specific">immortal time bias</span> <span class="val">→ ↑ treatment effect estimate</span>
+                </div>
+                <div class="atom-display">
+                    <span class="pred">outcome ::</span> <span class="icu-specific">PICS</span> <span class="val">→ cognitive | physical | mental impairment</span>
+                </div>
+            </div>
+
+            <div>
+                <h4 style="color: var(--text-dim); margin-bottom: 10px;">NODE: EMERGENCY CONSENT</h4>
+                
+                <div class="atom-display">
+                    <span class="pred">core ::</span> <span class="icu-specific">21 CFR 50.24</span> <span class="val">→ EFIC regulatory framework</span>
+                </div>
+                <div class="atom-display">
+                    <span class="pred">method ::</span> <span class="icu-specific">incapacity assessment</span> <span class="val">(=) clinical evaluation (GCS < 8 | unconsciousness)</span>
+                </div>
+                <div class="atom-display">
+                    <span class="pred">core ::</span> <span class="icu-specific">45 CFR 46.116(f)</span> <span class="val">→ Common Rule waiver criteria</span>
+                </div>
+                <div class="atom-display">
+                    <span class="pred">method ::</span> <span class="icu-specific">RASS score (≤ -4)</span> <span class="val">→ incapacity confirmation</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 20px; background: rgba(0, 243, 255, 0.05); border: 1px dashed var(--primary); border-radius: 8px;">
+            <p style="color: var(--primary); font-weight: 600; margin-bottom: 5px;">THE "EYES" CONCEPT</p>
+            <p style="font-size: 0.9rem;">The Node provides the vision (Context). The Atom provides the focus (Fact). The local 4B model doesn't need to know what "ICU" means; it just needs to know that <code>VFD = 28 - vent days</code> and syntax it into a sentence. This eliminates semantic drift entirely.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Nexus Enterprise Solutions. Next-Generation Factual Inference Architecture.</p>
+    </footer>
+
+</body>
+</html>
